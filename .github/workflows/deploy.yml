@@ -28,7 +28,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
 
       - name: Pulumi
-        uses: pulumi/actions@v4.4.0
+        uses: pulumi/actions@v6
         id: pulumi
         with:
           command: up
