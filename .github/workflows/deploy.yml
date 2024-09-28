@@ -1,0 +1,42 @@
+name: Deploy and Run Workflows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Allow the workflow to request an ID token
+  contents: read # Allow read access to the repository contents
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Az CLI login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_SP_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANTID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+
+      - name: Pulumi
+        uses: pulumi/actions@v4.4.0
+        id: pulumi
+        with:
+          command: up
+          stack-name: dev
+          work-dir: Deploy
+        env:
+          ARM_USE_OIDC: true
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_CLIENT_ID: ${{ secrets.AZURE_SP_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANTID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTIONID }}
