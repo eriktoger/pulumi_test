@@ -1,0 +1,3 @@
+config:
+  pulumi_test:myOwnId:
+    secure: AAABAGwAezmSqOYXoGKSRy5o0mhmR3oQbXUmWo7Qlo8b25tAE0Zn4tMdmwQar/O6Ed26IV8CTz4r9ZZwgPuvLNlHJ6I=
