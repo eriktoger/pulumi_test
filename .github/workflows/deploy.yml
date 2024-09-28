@@ -27,9 +27,20 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANTID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
 
-      - name: Pulumi
+      - name: Pulumi refresh
         uses: pulumi/actions@v6
-        id: pulumi
+        with:
+          command: refresh
+          stack-name: dev
+        env:
+          ARM_USE_OIDC: true
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_CLIENT_ID: ${{ secrets.AZURE_SP_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANTID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+
+      - name: Pulumi up
+        uses: pulumi/actions@v6
         with:
           command: up
           stack-name: dev
