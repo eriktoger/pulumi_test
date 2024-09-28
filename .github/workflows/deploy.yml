@@ -33,7 +33,6 @@ jobs:
         with:
           command: up
           stack-name: dev
-          work-dir: Deploy
         env:
           ARM_USE_OIDC: true
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
